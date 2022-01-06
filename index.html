@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quote Generator</title>
+  <link
+   rel="icon"
+   type="image/png"
+   href="https://www.google.com/s2/u/0/favicons?domain=jacinto.design
+    "
+  />
+  <link
+   rel="stylesheet"
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <link rel="stylesheet" href="style.css" />
+ </head>
+ <body>
+  <div class="quote-container" id="quore-container">
+   <!-- Quote -->
+   <div class="quote-text">
+    <i class="fas fa-quote-left"></i>
+    <span id="quote"></span>
+   </div>
+   <!-- Author -->
+   <div
+    class="quote-author"
+    style="font-family: Dancing Script, sans-serif; color: rgb(171, 189, 189)"
+   >
+    <span id="author"></span>
+   </div>
+   <!-- Buttons -->
+   <div class="button-container">
+    <button class="twitter-button" id="twitter" title="Twitter">
+     <i class="fab fa-twitter"></i>
+    </button>
+    <button id="new-quote">New Quote</button>
+   </div>
+  </div>
+
+  <!-- Script -->
+  <script src="quotes.js"></script>
+  <script>
+   const quoteContainer = document.getElementById('quote-container');
+   const quoteText = document.getElementById('quote');
+   const authorText = document.getElementById('author');
+   const twitterBtn = document.getElementById('twitter');
+   const newQuoteBtn = document.getElementById('new-quote');
+   const loader = document.getElementById('loader');
+
+   // let apiQuotes = [];
+
+   // Show new Quote
+   function newQuote() {
+    // Pick a random quote from apiQuotes array
+    const quote = localQuotes[Math.floor(Math.random() * localQuotes.length)];
+    // Check if author field is blank and replace it with 'Unknown'
+    if (!quote.author) {
+     authorText.textContent = 'Unknown';
+    } else {
+     authorText.textContent = quote.author;
+    }
+
+    // Check Quote length to determine styling
+    if (quote.text.length > 120) {
+     quoteText.classList.add('long-quote');
+    } else if (quote.text.length < 50) {
+     quoteText.classList.add('short-quote');
+    } else {
+     quoteText.classList.remove('long-quote');
+     quoteText.classList.remove('short-quote');
+    }
+
+    quoteText.textContent = quote.text;
+   }
+   // to tweet a code
+   function tweetQuote() {
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteText.textContent} - ${authorText.textContent}`;
+    window.open(twitterUrl, '_blank');
+   }
+
+   // Event Listeners
+   newQuoteBtn.addEventListener('click', newQuote);
+   twitterBtn.addEventListener('click', tweetQuote);
+   // On Load
+
+   // getQuotes();
+
+   newQuote();
+  </script>
+ </body>
+</html>
